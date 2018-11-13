@@ -1,0 +1,4 @@
+spring:
+  application:
+    service: ${APPLICATION_NAME:atom}
+    name: ${spring.application.service}-server
