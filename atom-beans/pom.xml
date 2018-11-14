@@ -7,27 +7,14 @@
         <artifactId>atom-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-
     <dependencies>
     </dependencies>
-
     <artifactId>atom-beans</artifactId>
 
     <build>
         <!-- 指定代码路径和测试类路径 -->
         <sourceDirectory>src/main/scala</sourceDirectory>
-        <plugins>
-            <plugin>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <configuration>
-                    <descriptorRefs>
-                        <descriptorRef>jar-with-dependencies</descriptorRef>
-                    </descriptorRefs>
-                </configuration>
-            </plugin>
-        </plugins>
     </build>
 </project>
