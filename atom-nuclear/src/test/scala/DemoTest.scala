@@ -7,4 +7,8 @@ class DemoTest {
   def demo(): Unit = {
     Logger.newInstance(classOf[DemoTest]).info("a demo test")
   }
+
+  @Test
+  def enumTest(): Unit = {
+  }
 }

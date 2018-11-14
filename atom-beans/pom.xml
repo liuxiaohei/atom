@@ -16,5 +16,6 @@
     <build>
         <!-- 指定代码路径和测试类路径 -->
         <sourceDirectory>src/main/scala</sourceDirectory>
+        <finalName>${project.artifactId}</finalName>
     </build>
 </project>
