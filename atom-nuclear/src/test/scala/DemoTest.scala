@@ -42,8 +42,11 @@ class DemoTest {
   def  fsmTest1(): Unit = {
     val a = new Phases
     println("固体熔化 + 升华" + a.solid(List(a.Melting,a.Sublimation)))
+    println("------")
     println("固体电离 + 升华" + a.solid(List(a.Ionization,a.Sublimation)))
+    println("------")
     println("固体熔化 + 熔化" + a.solid(List(a.Melting,a.Melting)))
+    println("------")
     println("固体熔化 + 汽化" + a.solid(List(a.Melting,a.Vaporization)))
   }
 }
