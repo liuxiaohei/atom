@@ -1,5 +1,5 @@
 import beans.DemoBean
-import org.atom.fsm.Phases
+import org.atom.fsm.{Phases, PhasestailRec}
 import org.atom.tools.Logger
 import org.junit.Test
 
@@ -48,5 +48,17 @@ class DemoTest {
     println("固体熔化 + 熔化" + a.solid(List(a.Melting,a.Melting)))
     println("------")
     println("固体熔化 + 汽化" + a.solid(List(a.Melting,a.Vaporization)))
+  }
+
+  @Test
+  def  fsmTest2(): Unit = {
+    val a = new PhasestailRec
+    println("固体熔化 + 升华" + a.solid(List(a.Melting,a.Sublimation)).result)
+    println("------")
+    println("固体电离 + 升华" + a.solid(List(a.Ionization,a.Sublimation)).result)
+    println("------")
+    println("固体熔化 + 熔化" + a.solid(List(a.Melting,a.Melting)).result)
+    println("------")
+    println("固体熔化 + 汽化" + a.solid(List(a.Melting,a.Vaporization)).result)
   }
 }
