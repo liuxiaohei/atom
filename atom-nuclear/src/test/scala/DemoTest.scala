@@ -7,7 +7,7 @@ class DemoTest {
   @Test
   def demo(): Unit = {
     Logger.newInstance(classOf[DemoTest]).info("a demo test")
-    val a = new DemoBean
+    val demobean = new DemoBean
   }
 
   @Test
