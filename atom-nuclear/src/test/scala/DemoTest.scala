@@ -1,4 +1,5 @@
 import beans.DemoBean
+import org.atom.fsm.Phases
 import org.atom.tools.Logger
 import org.junit.Test
 
@@ -10,7 +11,30 @@ class DemoTest {
     val demobean = new DemoBean
   }
 
+  /**
+    * 互相递归模式实现的状态机
+    */
   @Test
-  def enumTest(): Unit = {
+  def fsmTest(): Unit = {
+    val a = new Phases
+    println("气体电离" + a.vapor(List(a.Ionization)))
+    println("固体电离" + a.solid(List(a.Ionization)))
+    println("液体电离" + a.liquid(List(a.Ionization)))
+    println("等离子体电离" + a.plasma(List(a.Ionization)))
+
+    println("气体熔化" + a.vapor(List(a.Melting)))
+    println("固体熔化" + a.solid(List(a.Melting)))
+    println("液体熔化" + a.liquid(List(a.Melting)))
+    println("等离子体熔化" + a.plasma(List(a.Melting)))
+
+    println("气体汽化" + a.vapor(List(a.Vaporization)))
+    println("固体汽化" + a.solid(List(a.Vaporization)))
+    println("液体汽化" + a.liquid(List(a.Vaporization)))
+    println("等离子体汽化" + a.plasma(List(a.Vaporization)))
+
+    println("气体升华" + a.vapor(List(a.Sublimation)))
+    println("固体升华" + a.solid(List(a.Sublimation)))
+    println("液体升华" + a.liquid(List(a.Sublimation)))
+    println("等离子体升华" + a.plasma(List(a.Sublimation)))
   }
 }
