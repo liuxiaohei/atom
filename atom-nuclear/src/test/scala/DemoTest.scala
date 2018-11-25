@@ -15,7 +15,7 @@ class DemoTest {
     * 互相递归模式实现的状态机
     */
   @Test
-  def fsmTest(): Unit = {
+  def fsmTest0(): Unit = {
     val a = new Phases
     println("气体电离" + a.vapor(List(a.Ionization)))
     println("固体电离" + a.solid(List(a.Ionization)))
@@ -36,5 +36,14 @@ class DemoTest {
     println("固体升华" + a.solid(List(a.Sublimation)))
     println("液体升华" + a.liquid(List(a.Sublimation)))
     println("等离子体升华" + a.plasma(List(a.Sublimation)))
+  }
+
+  @Test
+  def  fsmTest1(): Unit = {
+    val a = new Phases
+    println("固体熔化 + 升华" + a.solid(List(a.Melting,a.Sublimation)))
+    println("固体电离 + 升华" + a.solid(List(a.Ionization,a.Sublimation)))
+    println("固体熔化 + 熔化" + a.solid(List(a.Melting,a.Melting)))
+    println("固体熔化 + 汽化" + a.solid(List(a.Melting,a.Vaporization)))
   }
 }

@@ -34,6 +34,8 @@ class Phases {
     * 蒸汽
     */
   def vapor(transitions: List[Transition]):TailRec[Boolean] = transitions match {
+    // 模式匹配 会在序列的首个元素有效的时候使用模式匹配获取该元素,
+    // 并调用函数转换到合适的状态,同时将剩下的转换过程作为入参传入该元素
     case Nil => TailCalls.done(true);
     case Condensation :: restTransitions => TailCalls.tailcall(liquid(restTransitions))
     case Deionization :: restTransitions => TailCalls.tailcall(solid(restTransitions))
