@@ -61,4 +61,9 @@ class DemoTest {
     println("------")
     println("固体熔化 + 汽化" + a.solid(List(a.Melting,a.Vaporization)).result)
   }
+
+  @Test
+  def 测试(): Unit = {
+    println("测试中文方法")
+  }
 }
