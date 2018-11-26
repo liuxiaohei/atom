@@ -64,6 +64,7 @@ class DemoTest {
 
   @Test
   def 测试(): Unit = {
-    println("测试中文方法")
+    val 槑 = "😯"
+    println("测试中文方法" + 槑)
   }
 }
