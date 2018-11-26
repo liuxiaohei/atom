@@ -13,7 +13,7 @@ public class DemoJavaService {
     @Autowired
     private SpringExtension springExtension;
 
-    public void detect(String detectStatus, int detectCount) {
+    public void detect() {
 
         ActorRef routerActorRef = actorSystem.actorOf(springExtension.props("detectActor2")
                 .withDispatcher("detect-dispatcher")

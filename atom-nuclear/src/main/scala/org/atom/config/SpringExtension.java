@@ -8,9 +8,10 @@ import akka.actor.Props;
 
 @Component("springExtension")
 public class SpringExtension implements Extension {
+
     private ApplicationContext applicationContext;
 
-    public void initialize(ApplicationContext applicationContext) {
+    void initialize(ApplicationContext applicationContext) {
         this.applicationContext = applicationContext;
     }
 
