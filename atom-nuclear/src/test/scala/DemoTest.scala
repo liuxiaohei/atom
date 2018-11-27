@@ -70,10 +70,11 @@ class DemoTest {
   implicit val system = ActorSystem("demo")
 
   @Test
-  def 异步终极武器Akka打印一千万条数据 {
+  def Akka样例 {
+    var num = 0
     val a = actor(new Act {
       become {                          // this will replace the initial (empty) behavior
-        case "info" => println("info");sender() ! "A"
+        case "info" => num = num + 1; println(num + "info");sender() ! "A"
         case "switch" =>
           becomeStacked {               // this will stack upon the "A" behavior
             case "info"   => sender() ! "B"
@@ -87,13 +88,15 @@ class DemoTest {
         case _: Exception                            => Resume
       })
     })
-    IntStream.rangeClosed(1,10000000).forEach(e => a ! "info")
+    IntStream.rangeClosed(1,100000).forEach(e => a ! "info")
     a ! "info"
     a ! "lobotomize"
+    println("end")
   }
 
   @Test
-  def 传统手段打印一百万条数据 {
-    IntStream.rangeClosed(1,1000000).forEach(e => println("info"))
+  def 对比 {
+    IntStream.rangeClosed(1,100000).forEach(e => println(e + "info"))
+    println("end")
   }
 }
