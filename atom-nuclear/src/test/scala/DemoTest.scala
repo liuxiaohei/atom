@@ -1,21 +1,12 @@
-import beans.DemoBean
+import java.util.stream.IntStream
+
 import org.atom.fsm.{Phases, PhasestailRec}
-import org.atom.tools.Logger
 import org.junit.Test
 
 class DemoTest {
 
   @Test
-  def demo(): Unit = {
-    Logger.newInstance(classOf[DemoTest]).info("a demo test")
-    val demobean = new DemoBean
-  }
-
-  /**
-    * 互相递归模式实现的状态机
-    */
-  @Test
-  def fsmTest0(): Unit = {
+  def 互相递归模式实现的状态机 {
     val a = new Phases
     println("气体电离" + a.vapor(List(a.Ionization)))
     println("固体电离" + a.solid(List(a.Ionization)))
@@ -39,7 +30,7 @@ class DemoTest {
   }
 
   @Test
-  def  fsmTest1(): Unit = {
+  def 状态组合 {
     val a = new Phases
     println("固体熔化 + 升华" + a.solid(List(a.Melting,a.Sublimation)))
     println("------")
@@ -51,7 +42,7 @@ class DemoTest {
   }
 
   @Test
-  def  fsmTest2(): Unit = {
+  def 尾递归优化 {
     val a = new PhasestailRec
     println("固体熔化 + 升华" + a.solid(List(a.Melting,a.Sublimation)).result)
     println("------")
@@ -63,14 +54,46 @@ class DemoTest {
   }
 
   @Test
-  def 测试(): Unit = {
+  def 测试 {
     val 槑 = "😯"
     println("测试中文方法" + 槑)
   }
 
   @Test
-  def ಥ_ಥ(): Unit = {
+  def ಥ_ಥ {
     val 槑 = "😯"
     println("测试表情符方法" + 槑)
+  }
+
+  import akka.actor.ActorDSL._
+  import akka.actor.ActorSystem
+  implicit val system = ActorSystem("demo")
+
+  @Test
+  def 异步终极武器Akka打印一千万条数据 {
+    val a = actor(new Act {
+      become {                          // this will replace the initial (empty) behavior
+        case "info" => println("info");sender() ! "A"
+        case "switch" =>
+          becomeStacked {               // this will stack upon the "A" behavior
+            case "info"   => sender() ! "B"
+            case "switch" => unbecome() // return to the "A" behavior
+          }
+        case "lobotomize" => println("lobotomize"); unbecome() // OH NOES: Actor.emptyBehavior
+      }
+
+      superviseWith(OneForOneStrategy() {
+        case e: Exception if e.getMessage == "hello" => Stop
+        case _: Exception                            => Resume
+      })
+    })
+    IntStream.rangeClosed(1,10000000).forEach(e => a ! "info")
+    a ! "info"
+    a ! "lobotomize"
+  }
+
+  @Test
+  def 传统手段打印一百万条数据 {
+    IntStream.rangeClosed(1,1000000).forEach(e => println("info"))
   }
 }
