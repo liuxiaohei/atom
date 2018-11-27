@@ -5,7 +5,9 @@ import akka.actor.ActorSystem;
 import akka.routing.SmallestMailboxPool;
 import org.atom.config.SpringExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DemoJavaService {
 
     @Autowired
@@ -20,8 +22,5 @@ public class DemoJavaService {
                 .withRouter(new SmallestMailboxPool(50000)), "detectRouterActor");
 
         System.out.println("into detect function,resultActorRef=" + routerActorRef.path());
-
-
-        //routerActorRef.tell(new MapMessage(instance, connectMap), ActorRef.noSender());
     }
 }

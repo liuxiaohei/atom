@@ -12,11 +12,10 @@ import scala.PartialFunction;
 @Scope("prototype")
 public class DetectActor2 extends AbstractActor {
 
-    public PartialFunction receive() {
-        return ReceiveBuilder.match(String.class, s -> {
+    public Receive createReceive() {
+        return ReceiveBuilder.create().match(String.class, s -> {
             System.out.printf("get %s\n" , s);
             sender().tell("Hi", self());
-
         }).matchAny(x -> {
             System.out.printf("I dont know what you see in DetectActor,%s", getContext().self().path());
             sender().tell(new Status.Failure(new Exception("I dont know what you see")), self());
