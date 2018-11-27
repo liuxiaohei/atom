@@ -91,12 +91,12 @@ class DemoTest {
     IntStream.rangeClosed(1,100000).forEach(e => a ! "info")
     a ! "info"
     a ! "lobotomize"
-    println "end"
+    println("end")
   }
 
   @Test
   def 对比 {
     IntStream.rangeClosed(1,100000).forEach(e => println(e + "info"))
-    println "end"
+    println("end")
   }
 }
