@@ -88,15 +88,16 @@ class DemoTest {
         case _: Exception                            => Resume
       })
     })
-    IntStream.rangeClosed(1,100000).forEach(e => a ! "info")
+    1 to 100000 foreach (e => a ! "info")
     a ! "info"
     a ! "lobotomize"
     println("end")
+    Thread sleep 1000 // Scala 之中是不存在首检异常的
   }
 
   @Test
   def 对比 {
-    1 to 10000 foreach(e => println(e + "info"))
+    1 to 100000 foreach(e => println(e + "info"))
     println("end")
   }
 }
