@@ -1,5 +1,3 @@
-import java.util.stream.IntStream
-
 import org.atom.fsm.{Phases, PhasestailRec}
 import org.junit.Test
 
@@ -64,6 +62,8 @@ class DemoTest {
     val 槑 = "😯"
     println("测试表情符方法" + 槑)
   }
+
+  //参照文档  https://doc.akka.io/docs/akka/2.5.13/
 
   import akka.actor.ActorDSL._
   import akka.actor.ActorSystem
