@@ -96,7 +96,7 @@ class DemoTest {
 
   @Test
   def 对比 {
-    IntStream.rangeClosed(1,100000).forEach(e => println(e + "info"))
+    1 to 10000 foreach(e => println(e + "info"))
     println("end")
   }
 }
