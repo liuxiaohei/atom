@@ -12,7 +12,7 @@ class AcotrLearn {
       become {
         case _ => 1 to 10 foreach(e => {
           println(e + "actor1")
-          Thread.sleep(50)
+          Thread sleep 50
         })
       }
     })
@@ -20,11 +20,11 @@ class AcotrLearn {
       become {
         case _ => 1 to 10 foreach(e => {
           println(e + "actor2")
-          Thread.sleep(50)
+          Thread sleep 50
         })
       }
     })
-    actor1 ! "info"
+    actor1 ! "info" // !代表发送信息不等待
     actor2 ! "info"
     Thread sleep 500
   }
