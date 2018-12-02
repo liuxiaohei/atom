@@ -4,7 +4,7 @@ class ActorLearn {
 
   import akka.actor.ActorDSL._
   import akka.actor.ActorSystem
-  implicit val system = ActorSystem("demo")
+  implicit val system = ActorSystem("MySystem")
 
   @Test
   def demo1(): Unit = {
