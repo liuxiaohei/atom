@@ -4,6 +4,7 @@ class ActorLearn {
 
   import akka.actor.ActorDSL._
   import akka.actor.ActorSystem
+  import akka.pattern.ask
   implicit val system = ActorSystem("MySystem")
 
   @Test
@@ -46,7 +47,10 @@ class ActorLearn {
     })
     actor3 ! "start"           // 发送 start
     actor3 ! AsynMsg(1,"demo") // 没有返回值的异步消息
-    actor3 ! SyncMsg(2,"hello")
+    val future = actor3 ? SyncMsg(2,"hello")
+    future onSuccess {
+      case s => println(s)
+    }
   }
 
   case class AsynMsg(id:Int,msg:String) // 异步消息
