@@ -6,7 +6,7 @@ case object Ping
 case object Pong
 
 class Pinger extends Actor {
-  var countDown = 100
+  var countDown = 10000
   def receive = {
     case Pong ⇒
       println(s"${self.path} received pong, count down $countDown")
@@ -14,7 +14,7 @@ class Pinger extends Actor {
         countDown -= 1
         sender() ! Ping
       } else {
-        sender() ! PoisonPill
+        sender() ! PoisonPill // 毒药 杀死 Actor
         self ! PoisonPill
       }
   }
