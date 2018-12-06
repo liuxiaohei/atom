@@ -59,7 +59,7 @@ class ActorLearn {
     future onSuccess {
       case ReplyMsg(id,msg) => println("reply:" + "id:" + id + "msg:" + msg)
     }
-    Thread sleep 10
+    Thread sleep 50
   }
 
   case class AsynMsg(id:Int,msg:String) // 异步消息
