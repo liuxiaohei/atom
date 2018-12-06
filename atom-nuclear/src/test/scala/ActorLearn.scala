@@ -4,6 +4,7 @@ import akka.util.Timeout
 import org.junit.Test
 
 import scala.concurrent._
+import scala.util.{Failure, Success}
 
 class ActorLearn {
 
@@ -58,6 +59,15 @@ class ActorLearn {
     val future = actor3 ? SyncMsg(2,"hello")
     future onSuccess {
       case ReplyMsg(id,msg) => println("reply:" + "id:" + id + "msg:" + msg)
+    }
+
+    future onFailure {
+      case e => println("失败")
+    }
+
+    future onComplete {
+      case Success(ReplyMsg(id,msg)) => println("reply2:" + "id:" + id + "msg:" + msg)
+      case Failure(value) => println("失败")
     }
     Thread sleep 50
   }
