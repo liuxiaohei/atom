@@ -1,11 +1,16 @@
+import java.util.concurrent.TimeUnit
+
+import akka.util.Timeout
 import org.junit.Test
+
+import scala.concurrent._
 
 class ActorLearn {
 
   import akka.actor.ActorDSL._
   import akka.actor.ActorSystem
   import akka.pattern.ask
-  implicit val system = ActorSystem("MySystem")
+  implicit val system = ActorSystem("MySystem") // 隐式变量
 
   @Test
   def demo1(): Unit = {
@@ -30,6 +35,9 @@ class ActorLearn {
     Thread sleep 500
   }
 
+  import ExecutionContext.Implicits.global
+  implicit val timeout = Timeout(5L,TimeUnit.SECONDS) //隐式变量设定1s为超时的时间
+
   @Test
   def demo2(): Unit = {
     val actor3 = actor(new Act {
@@ -49,8 +57,9 @@ class ActorLearn {
     actor3 ! AsynMsg(1,"demo") // 没有返回值的异步消息
     val future = actor3 ? SyncMsg(2,"hello")
     future onSuccess {
-      case s => println(s)
+      case ReplyMsg(id,msg) => println("reply:" + "id:" + id + "msg:" + msg)
     }
+    Thread sleep 10
   }
 
   case class AsynMsg(id:Int,msg:String) // 异步消息
