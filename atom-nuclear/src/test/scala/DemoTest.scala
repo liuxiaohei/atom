@@ -1,7 +1,8 @@
 import org.atom.fsm.{Phases, PhasestailRec}
+import org.atom.functions.BaseTrait
 import org.junit.Test
 
-class DemoTest {
+class DemoTest extends BaseTrait {
 
   @Test
   def 互相递归模式实现的状态机 {
@@ -99,5 +100,10 @@ class DemoTest {
   def 对比 {
     1 to 100000 foreach(e => println(e + "info"))
     println("end")
+  }
+
+  @Test
+  def demo(): Unit = {
+    println(isValidJSON("[1,3,4,5,6,7,8,9,10]"))
   }
 }

@@ -47,6 +47,13 @@ trait BaseTrait {
   def obj2PrettyJson[T](t: T):String = BaseTrait.PRETTY_G.toJson(t)
   private def isEmptyJson(json: String):Boolean = isEmpty(json) || json.matches("\\{\\s*\\}")
   def json2Obj[T >: Null](json: String, c: Class[T]):T = Some(json).filter(e => !isEmptyJson(e)).map(e => BaseTrait.G.fromJson(json,c)).orNull
+  def isValidJSON(jsonInString: String): Boolean = try {
+    BaseTrait.G.fromJson(jsonInString, classOf[Any])
+    true
+  } catch {
+    case _: Throwable => false
+  }
+  def isInValidJSON(jsonInString: String):Boolean = !isValidJSON(jsonInString)
   def check(field: String, message: String):Unit = whenThrow(isEmpty(field),message)
   def check(field: Integer, message: String):Unit = whenThrow(isInValidId(field),message)
   def check(obj: Object, message: String):Unit = whenThrow(isNull(obj),message)
