@@ -1,3 +1,4 @@
+import org.atom.constant.正则表达式
 import org.atom.fsm.{Phases, PhasestailRec}
 import org.atom.functions.BaseTrait
 import org.junit.Test
@@ -105,5 +106,15 @@ class DemoTest extends BaseTrait {
   @Test
   def json校验测试: Unit = {
     println(isValidJSON("[1,3,4,5,6,7,8,9,10]"))
+  }
+
+  @Test
+  def 正则表达式测试: Unit = {
+    println("😊" matches 正则表达式.emoji表情)
+    println("1" matches 正则表达式.数字)
+    println("1" matches 正则表达式.Email地址)
+    println("1" matches 正则表达式.InternetURL)
+    println("1" matches 正则表达式.域名)
+    println("刘" matches 正则表达式.汉字)
   }
 }
