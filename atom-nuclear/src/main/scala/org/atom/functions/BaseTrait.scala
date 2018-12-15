@@ -4,8 +4,6 @@ import java.util
 import java.util.function.{Consumer, Function}
 import java.util.{Base64, Objects, Optional}
 
-import com.google.gson.GsonBuilder
-
 /*
  * @author ld
  * 基础工具函数仓库集合
@@ -70,6 +68,7 @@ trait BaseTrait {
 }
 
 object BaseTrait {
+  import com.google.gson.GsonBuilder
   private val G = new GsonBuilder().create()
   private val PRETTY_G = new GsonBuilder().setPrettyPrinting().create()
 }

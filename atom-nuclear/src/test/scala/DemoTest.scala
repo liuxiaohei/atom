@@ -103,7 +103,7 @@ class DemoTest extends BaseTrait {
   }
 
   @Test
-  def demo(): Unit = {
+  def json校验测试: Unit = {
     println(isValidJSON("[1,3,4,5,6,7,8,9,10]"))
   }
 }
