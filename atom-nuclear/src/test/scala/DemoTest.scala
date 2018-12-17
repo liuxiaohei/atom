@@ -113,7 +113,7 @@ class DemoTest extends BaseTrait {
     println("😊" matches 正则表达式.emoji表情)
     println("1" matches 正则表达式.数字)
     println("1" matches 正则表达式.Email地址)
-    println("1" matches 正则表达式.InternetURL)
+    println("1" matches 正则表达式.一年的12个月)
     println("1" matches 正则表达式.域名)
     println("刘" matches 正则表达式.汉字)
   }
