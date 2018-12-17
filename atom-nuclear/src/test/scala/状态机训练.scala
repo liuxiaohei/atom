@@ -3,7 +3,7 @@ import org.atom.fsm.{Phases, PhasestailRec}
 import org.atom.functions.BaseTrait
 import org.junit.Test
 
-class DemoTest extends BaseTrait {
+class 状态机训练 extends BaseTrait {
 
   @Test
   def 互相递归模式实现的状态机 {
