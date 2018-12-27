@@ -11,20 +11,20 @@ class Option学习 {
   }
 
   @Test
-  def demo1: Unit ={
+  def demo1: Unit = {
     println(toInt("aaa").getOrElse("-1"))
     println(toInt("1").getOrElse("-1"))
   }
 
   @Test
-  def demo2: Unit ={
+  def demo2: Unit = {
     toInt("1").foreach {
       i => println(i)
     }
   }
 
   @Test
-  def demo3: Unit ={
+  def demo3: Unit = {
     toInt("1") match {
       case Some(i) => println(i)
       case None => println("That didn't work.")
@@ -35,5 +35,7 @@ class Option学习 {
       case None => println("That didn't work.")
     }
   }
+
+
 }
 
