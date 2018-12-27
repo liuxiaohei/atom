@@ -1,5 +1,6 @@
 import java.util.concurrent.TimeUnit
 
+import akka.actor.ActorSystem
 import akka.util.Timeout
 import org.junit.Test
 
@@ -9,7 +10,6 @@ import scala.util.{Failure, Success}
 class ActorLearn {
 
   import akka.actor.ActorDSL._
-  import akka.actor.ActorSystem
   import akka.pattern.ask
   implicit val system = ActorSystem("MySystem") // 隐式变量
 
