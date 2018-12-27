@@ -80,13 +80,15 @@ class 模式匹配 {
   //5) 类型模式(type patterns)
   //类型模式很简单，就是判断对象是否是某种类型：
   @Test
-  def 类型模式: Unit ={
-    "hello" match { case _:String => println("ok") }
+  def 类型模式: Unit = {
+    "hello" match {
+      case _: String => println("ok")
+    }
     // 跟 isInstanceOf 判断类型的效果一样，需要注意的是scala匹配泛型时要注意
-    val a:Any = List("1","2")
-     a match {
-      case a :List[String] => println("ok")
-      case _ =>  println("other")
+    val a: Any = List("1", "2")
+    a match {
+      case a: List[String] => println("ok")
+      case _ => println("other")
     }
   }
 
@@ -100,8 +102,34 @@ class 模式匹配 {
     case class Tree(root: TreeNode)
     val tree = Tree(TreeNode("root", TreeNode("left", null, null), TreeNode("right", null, null)))
     tree.root match {
-      case TreeNode(_, leftNode@TreeNode("left",_,_), _) =>
+      case TreeNode(_, leftNode@TreeNode("left", _, _), _) =>
         println(leftNode.v)
     }
   }
+
+  //总结：模式匹配的核心功能是解构
+  //  解构对象 (De-constructing objects)
+  //
+  //  Bill Venners: 你说模式像表达式，但它更像“逆表达式”，不同于插入值并得到结果(构造一个对象的过程)，
+  // 你放入一个值，当它匹配，一串值弹出来。
+  //
+  //  Martin Odersky: 是的，它确实是反向构造，我可以通过嵌套的构造器来构造对象。我有一个方法一些参数，
+  // 通过这些参数可以构造出复杂的对象结构。模式匹配正好相反，它从一个复杂的对象结构中抽出原来用于构造这个对象的参数
+  //  可扩展性的两个方向(Two directions of extensibility)
+  //
+  //  扩展性的另一个概念是数据结构相对固定，你不想改变它，但你想要用到的行为操作是开放的。你随时都想要添加新的操作。
+  //  典型的例子是编译器，编译器用语法树表达你的程序，只要你没有改变你的语言，语法树就不会变，一直都是同一颗树
+  //  但编译器想要这棵语法树每天改变。明天你或许想到一种新的优化在遍历树的阶段。
+  //
+  //  所以，你想采取的办法是操作定义在你的语法树外部，否则你要不断的添加新方法
+  //
+  //  这个工作正确的方向，取决于你想在那个方向扩展，如果你想要扩展新的数据，你选择经典的面向对象通过虚方法调用实现。
+  // 如果你想保持数据固定，扩展新的操作，模式更适合。实际上有一个设计模式，不要和模式匹配混淆，在面向对象程序中称为“访问者模式”，也可以用面向对象的方式表达模式匹配的方式，基于虚方法委派的。
+  //
+  //  但实际中用visitor模式是非常笨重的，不能像模式匹配那样轻松的做很多事。你应该终结笨重的vistors，
+  // 同时在现代虚拟机技术中也证明vistor模式远没有模式匹配有效。所有这些原因，我想应该为模式匹配定义一套规则
+
+  //  ps, 前段时间王垠同学在批判设计模式的一篇文章中，提到visitor模式就是模式匹配。
+  //  可以对比一下scala语言通过case class/extractor方式在语言级别支持模式匹配，与通过visitor模式来达到同样的效果时的代码差别
+
 }
