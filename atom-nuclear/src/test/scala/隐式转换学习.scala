@@ -53,7 +53,7 @@ class 隐式转换学习 {
     import swimming._
 
     val rabbit = new AminalType
-    rabbit wantLearned "breaststroke" //蛙泳
+    rabbit wantLearned "breaststroke" // 蛙泳
   }
 
   //  像intToString，learningType这类的方法就是隐式视图，通常为Int => String的视图，定义的格式如下：
