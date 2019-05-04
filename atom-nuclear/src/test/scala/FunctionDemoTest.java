@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -226,14 +225,6 @@ public class FunctionDemoTest implements BaseTrait {
         String[] fontName = e.getAvailableFontFamilyNames();
         for (int i = 0; i < fontName.length; i++) {
             System.out.println(fontName[i]);
-        }
-    }
-
-    @Test
-    public void demo17() {
-        for(int i=0;i<10;i++){
-            String uuid = UUID.randomUUID().toString().replaceAll("-", "");
-            System.out.println(uuid);
         }
     }
 
@@ -463,6 +454,9 @@ public class FunctionDemoTest implements BaseTrait {
         );
     }
 
+    /**
+     * orElse和orElseGet的区别
+     */
     @Test
     public void demo35() {
         String a = null;
@@ -475,10 +469,6 @@ public class FunctionDemoTest implements BaseTrait {
         String a = null;
         Optional.ofNullable(null)
                 .orElseGet(() -> a.length());
-    }
-
-    @Test
-    public void demo37() {
     }
 
     /**
