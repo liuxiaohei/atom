@@ -1,4 +1,4 @@
-public class DemoBean implements DemoInterface {
+public class DemoBean {
     String name;
     Integer age;
     Integer height;
@@ -43,10 +43,4 @@ public class DemoBean implements DemoInterface {
         this.weight = weight;
     }
 
-    @Override
-    public String demotest() {
-        DemoInterface.staticDemo();
-        //staticDemo(); //接口的静态方法只能通过类名.方法的手段调用
-        return " demo test";
-    }
 }

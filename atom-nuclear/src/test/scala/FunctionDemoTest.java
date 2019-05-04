@@ -34,7 +34,7 @@ public class FunctionDemoTest implements BaseTrait {
 
     @Test
     public void demo1() {
-        System.out.print(sum(7,2,this::sum));
+        System.out.println(sum(7,2,this::sum));
     }
 
     /**
@@ -83,7 +83,7 @@ public class FunctionDemoTest implements BaseTrait {
      */
 
     private void demo4(List<DemoBean> list,Function<DemoBean,Integer> func,Integer yuzhi) {
-        System.out.print(obj2PrettyJson(
+        System.out.println(obj2PrettyJson(
                 beans.stream().filter(e -> func.apply(e) > yuzhi).collect(Collectors.toList())
         ));
     }
@@ -104,15 +104,15 @@ public class FunctionDemoTest implements BaseTrait {
     @Test
     public void demo7() {
         Supplier<String> lazy = () -> {
-            System.out.print("执行");
+            System.out.println("执行");
             return  "执行完毕";
         };
 
-        System.out.print("开始");
-        System.out.print("第一步");
-        System.out.print("第二步");
-        System.out.print(lazy.get());
-        System.out.print("第三步");
+        System.out.println("开始");
+        System.out.println("第一步");
+        System.out.println("第二步");
+        System.out.println(lazy.get());
+        System.out.println("第三步");
     }
 
     /**
@@ -121,24 +121,7 @@ public class FunctionDemoTest implements BaseTrait {
     @Test
     public void demo8() {
         List<Supplier<String>> a = Arrays.asList(() -> "one",() -> "two",() -> "three");
-        a.stream().map(Supplier::get).forEach(System.out::print);
-    }
-
-    /**
-     * 关于接口在Java8的新的用法
-     */
-    @Test
-    public void demo9() {
-        DemoBean a = new DemoBean("1",2,3,4);
-        System.out.print(a.equals(a));
-        System.out.print(a.notEquals(a));
-        DemoBean b = new DemoBean("1",2,3,4);
-        System.out.print(a.equals(b));
-        System.out.print(a.notEquals(b));
-
-        System.out.print(a.sunperString());
-        System.out.print(a.demotest());
-        System.out.print(a.anotherDemoTest());
+        a.stream().map(Supplier::get).forEach(System.out::println);
     }
 
     /**
@@ -147,14 +130,14 @@ public class FunctionDemoTest implements BaseTrait {
     @Test
     public void demo10() {
         IntStream a = IntStream.rangeClosed(1,15);
-        System.out.print(obj2PrettyJson(a));
-        System.out.print(a.boxed().collect(Collectors.toList()));
-        System.out.print(IntStream.rangeClosed(0,15).boxed().collect(Collectors.toList()));
-        System.out.print(IntStream.rangeClosed(-1,15).boxed().collect(Collectors.toList()));
-        System.out.print(IntStream.rangeClosed(15,1).boxed().collect(Collectors.toList()));
-        System.out.print(IntStream.rangeClosed(0,0).boxed().collect(Collectors.toList()));
-        System.out.print(IntStream.rangeClosed(-1,-2).boxed().collect(Collectors.toList()));
-        System.out.print(IntStream.rangeClosed(-2,-1).boxed().collect(Collectors.toList()));
+        System.out.println(obj2PrettyJson(a));
+        System.out.println(a.boxed().collect(Collectors.toList()));
+        System.out.println(IntStream.rangeClosed(0,15).boxed().collect(Collectors.toList()));
+        System.out.println(IntStream.rangeClosed(-1,15).boxed().collect(Collectors.toList()));
+        System.out.println(IntStream.rangeClosed(15,1).boxed().collect(Collectors.toList()));
+        System.out.println(IntStream.rangeClosed(0,0).boxed().collect(Collectors.toList()));
+        System.out.println(IntStream.rangeClosed(-1,-2).boxed().collect(Collectors.toList()));
+        System.out.println(IntStream.rangeClosed(-2,-1).boxed().collect(Collectors.toList()));
     }
 
     /**
@@ -214,7 +197,7 @@ public class FunctionDemoTest implements BaseTrait {
         Tester.test(() -> {
             CompletableFuture.supplyAsync(this::sleep)
                     .thenCombine(CompletableFuture.supplyAsync(this::sleep),
-                    (a,b) -> {System.out.print(a + b);
+                    (a,b) -> {System.out.println(a + b);
             return 0;}).join();
             return 14;
         });
@@ -227,7 +210,7 @@ public class FunctionDemoTest implements BaseTrait {
     public void demo15() {
         Tester.test(() -> {
             CompletableFuture.supplyAsync(() -> this.waitFor(1000)).applyToEither(CompletableFuture.supplyAsync(() -> this.waitFor(2000)),e -> {
-               System.out.print("结束" + e);
+               System.out.println("结束" + e);
                return 0;
            }).join();
            return 15;
@@ -261,8 +244,10 @@ public class FunctionDemoTest implements BaseTrait {
     public void demo18() {
         Optional.ofNullable(beans)
                 .orElseGet(ArrayList::new)
-                .stream().forEach(System.out::print);
-        //safeList(beans).forEach();
+                .stream().forEach(System.out::println);
+
+        Optional.ofNullable(beans)
+                .ifPresent(list -> list.stream().forEach(System.out::println));
     }
 
     /**
@@ -270,7 +255,7 @@ public class FunctionDemoTest implements BaseTrait {
      */
     @Test
     public void demo19() {
-        System.out.print(obj2PrettyJson(beans.stream().collect(Collectors.groupingBy(e -> e.age))));
+        System.out.println(obj2PrettyJson(beans.stream().collect(Collectors.groupingBy(e -> e.age))));
     }
 
     /**
@@ -278,7 +263,7 @@ public class FunctionDemoTest implements BaseTrait {
      */
     @Test
     public void demo20() {
-        System.out.print(obj2PrettyJson(beans.stream()
+        System.out.println(obj2PrettyJson(beans.stream()
                 .collect(Collectors.groupingBy(e -> e.age,Collectors.counting()))));
     }
 
@@ -287,7 +272,7 @@ public class FunctionDemoTest implements BaseTrait {
      */
     @Test
     public void demo21() {
-        System.out.print(obj2PrettyJson(beans.stream()
+        System.out.println(obj2PrettyJson(beans.stream()
                 .collect(Collectors.groupingBy(e -> e.age,
                         Collectors.mapping(e -> e.name,
                                 Collectors.toList())))));
@@ -298,8 +283,11 @@ public class FunctionDemoTest implements BaseTrait {
      */
     @Test
     public void demo22() {
-        System.out.print(obj2PrettyJson(beans.stream()
+        System.out.println(obj2PrettyJson(beans.stream()
                 .collect(Collectors.toMap(e -> e.name,e -> e.height))));
+
+        System.out.println(obj2PrettyJson(beans.stream()
+                .collect(Collectors.toMap(e -> e.name,e -> e.height,(left,right) -> right))));
     }
 
     /**
@@ -308,7 +296,7 @@ public class FunctionDemoTest implements BaseTrait {
     @Test
     public void demo23() {
         String str = "cm";
-        System.out.print(obj2PrettyJson(beans.stream()
+        System.out.println(obj2PrettyJson(beans.stream()
                 .collect(Collectors.toMap(e -> e.name,e -> {
                     //str = str+1;
                     return e.height + str;}))));
@@ -340,7 +328,7 @@ public class FunctionDemoTest implements BaseTrait {
      */
     private long fibonacciMemoOpt(long n) {
         if (n <= 1) return 1;
-        return cache.computeIfAbsent(n, key -> fibonacciMemoOpt(n - 1) + fibonacciMemoOpt(n - 2));
+        return cache.computeIfAbsent(n, key -> fibonacciMemoOpt(key - 1) + fibonacciMemoOpt(key - 2));
     }
 
     /**
@@ -348,8 +336,8 @@ public class FunctionDemoTest implements BaseTrait {
      */
     @Test
     public void demo25() {
-        Tester.test(() -> fibonacciMemoOpt(47));
-        System.out.print(obj2PrettyJson(cache));
+        Tester.test(() -> fibonacciMemoOpt(47L));
+        System.out.println(obj2PrettyJson(cache));
     }
 
     /**
@@ -381,7 +369,7 @@ public class FunctionDemoTest implements BaseTrait {
     public void demo28() {
         Tester.test(() ->
                 CompletableFuture.supplyAsync(() -> 1)
-                        .thenAccept(e -> System.out.print(e + 3)).join()
+                        .thenAccept(e -> System.out.println(e + 3)).join()
         );
     }
 
@@ -392,7 +380,7 @@ public class FunctionDemoTest implements BaseTrait {
     public void demo29() {
         Tester.test(() ->
                 CompletableFuture.supplyAsync(() -> 1)
-                        .thenRun(() -> System.out.print(3)).join()
+                        .thenRun(() -> System.out.println(3)).join()
         );
     }
 
@@ -412,7 +400,7 @@ public class FunctionDemoTest implements BaseTrait {
         Tester.test(() ->
                 CompletableFuture.supplyAsync(() -> waitFor(1000))
                         .runAfterBothAsync(CompletableFuture.supplyAsync(() -> waitFor(1000))
-                                ,() -> System.out.print("finish")).join()
+                                ,() -> System.out.println("finish")).join()
         );
     }
 
@@ -428,10 +416,10 @@ public class FunctionDemoTest implements BaseTrait {
                 }).whenComplete((e,error) -> {
                     //throwParamError(error.getMessage());
                     if (nonNull(error)) {
-                        System.out.print(error.getMessage());
+                        System.out.println(error.getMessage());
                     }
                     if (nonNull(e)) {
-                        System.out.print(e);
+                        System.out.println(e);
                     }
                     }).join()
         );
@@ -469,7 +457,7 @@ public class FunctionDemoTest implements BaseTrait {
                     //throwParamError(error.getMessage());
                     return 1024L;})
                         .handle((e,error) -> {
-                            System.out.print("finally");
+                            System.out.println("finally");
                             return 2 * e;
                         }).join()
         );
@@ -499,9 +487,9 @@ public class FunctionDemoTest implements BaseTrait {
     private long waitFor(long ms) {
         try {
             Thread.sleep(ms);
-            System.out.print("等待" + ms + "ms");
+            System.out.println("等待" + ms + "ms");
         } catch (Exception e) {
-            System.out.print("时间" + ms + e.getMessage());
+            System.out.println("时间" + ms + e.getMessage());
             throw error(e.getMessage());
         }
         return ms;
