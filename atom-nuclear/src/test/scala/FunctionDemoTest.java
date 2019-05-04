@@ -16,7 +16,7 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class DemoTest implements BaseTrait {
+public class FunctionDemoTest implements BaseTrait {
 
     /**
      * 最初方法只能传入和返回数据
@@ -53,8 +53,8 @@ public class DemoTest implements BaseTrait {
 
     @Test
     public void demo2() {
-        System.out.print(sum(1).apply(2));
-        System.out.print(sum().apply(2).apply(3));
+        System.out.println(sum(1).apply(2));
+        System.out.println(sum().apply(2).apply(3));
     }
 
     @Test
