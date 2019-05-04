@@ -34,6 +34,8 @@ public class FunctionDemoTest implements BaseTrait {
     @Test
     public void demo1() {
         System.out.println(sum(7,2,this::sum));
+        System.out.println(sum(7,2,(x,y) -> sum(x,y)));
+        System.out.println(sum(7,2,(x,y) -> x + y));
     }
 
     /**
@@ -44,7 +46,7 @@ public class FunctionDemoTest implements BaseTrait {
     }
 
     /**
-     * 科里化减少参数个数
+     * 以此作为例子科里化减少参数个数
      */
     private Function<Integer,Function<Integer,Integer>> sum() {
         return x -> y -> sum(x,y);
@@ -80,7 +82,6 @@ public class FunctionDemoTest implements BaseTrait {
     /**
      * 一个需求 要求获取所有身高大于175的人
      */
-
     private void demo4(List<DemoBean> list,Function<DemoBean,Integer> func,Integer yuzhi) {
         System.out.println(obj2PrettyJson(
                 beans.stream().filter(e -> func.apply(e) > yuzhi).collect(Collectors.toList())
@@ -121,6 +122,7 @@ public class FunctionDemoTest implements BaseTrait {
     public void demo8() {
         List<Supplier<String>> a = Arrays.asList(() -> "one",() -> "two",() -> "three");
         a.stream().map(Supplier::get).forEach(System.out::println);
+        // 其实这个lambda也可以放入枚举之中的 在很多情况都是有奇效的
     }
 
     /**
@@ -291,6 +293,14 @@ public class FunctionDemoTest implements BaseTrait {
                 .collect(Collectors.toMap(e -> e.name,e -> {
                     //str = str+1;
                     return e.height + str;}))));
+
+        Supplier<Long> b;
+        try {
+            long a = 10;
+            b = () -> 1 + a;
+        } finally {
+        }
+        System.out.println(b.get());
     }
 
     /**
