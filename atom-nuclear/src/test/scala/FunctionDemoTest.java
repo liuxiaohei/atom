@@ -231,7 +231,7 @@ public class FunctionDemoTest implements BaseTrait {
     }
 
     /**
-     * 1
+     * 1 组合拳
      */
     @Test
     public void demo18() {

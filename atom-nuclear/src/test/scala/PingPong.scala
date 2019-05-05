@@ -10,6 +10,7 @@ class Pinger extends Actor {
   def receive = {
     case Pong ⇒
       println(s"${self.path} received pong, count down $countDown")
+
       if (countDown > 0) {
         countDown -= 1
         sender() ! Ping
