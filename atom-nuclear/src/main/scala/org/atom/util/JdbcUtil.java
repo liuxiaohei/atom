@@ -391,8 +391,6 @@ public class JdbcUtil {
 
     /**
      * @param args
-     * @throws
-     * @Description: TODO
      * @author: chenzw
      * @CreateTime: 2014-1-17 下午2:47:45
      */
