@@ -38,12 +38,12 @@ public class JdbcDemoTest implements BaseTrait {
                         e.getJdbcUrl(),
                         e.getUsername(),
                         e.getPassword())))
-                .ifPresent(e -> getsqlResult(e,"select * from 36kr.clue"));
+                .ifPresent(e -> selectSqlResult(e,"select * from 36kr.clue"));
 
     }
 
     /**
-     *
+     *  由于oracle的驱动中心库不存在的原因
      *  mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc6.jar
      */
     @Test
@@ -109,7 +109,10 @@ public class JdbcDemoTest implements BaseTrait {
         return databaseMetaData;
     }
 
-    private static void getsqlResult(Connection conn,String sql) {
+    /**
+     * 执行一段sql检索语句并打印出其结果
+     */
+    private static void selectSqlResult(Connection conn,String sql) {
         PreparedStatement pstmt;
         try {
             pstmt = conn.prepareStatement(sql);
