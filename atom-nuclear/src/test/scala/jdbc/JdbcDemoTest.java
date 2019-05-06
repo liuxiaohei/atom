@@ -43,6 +43,50 @@ public class JdbcDemoTest implements BaseTrait {
     }
 
     /**
+     * http://www.it1352.com/594867.html
+     */
+    @Test
+    public void mysqlDemo1() throws Exception{
+        ConnectionBean con = new ConnectionBean();
+        con.setJdbcUrl("jdbc:mysql://localhost:3306/");
+        con.setUsername("root");
+        con.setPassword("******");
+        Optional<DatabaseMetaData> databaseMetaData = Optional.of(con)
+                .map(Try.of(e -> DriverManager.getConnection(
+                        e.getJdbcUrl(),
+                        e.getUsername(),
+                        e.getPassword())))
+                .map(Try.of(Connection::getMetaData));
+
+        databaseMetaData
+                .map(Try.of(DatabaseMetaData::getCatalogs))
+                .ifPresent(rs -> {
+                    try {
+                        while (rs.next()) {
+                            System.out.println("TABLE_CAT = "
+                                    + rs.getString("TABLE_CAT"));
+                        }
+                    } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+
+        databaseMetaData
+                .map(Try.of(DatabaseMetaData::getSchemas))
+                .ifPresent(rs -> {
+                    System.out.println("List of schemas: ");
+                    try {
+                        while (rs.next()){
+                            String tableSchem = rs.getString("TABLE_SCHEM");
+                            System.out.println(tableSchem);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+    }
+    /**
      *  由于oracle的驱动中心库不存在的原因
      *  mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc6.jar
      */
@@ -90,23 +134,40 @@ public class JdbcDemoTest implements BaseTrait {
 
     /**
      * 打印数据库元数据的信息
+     * https://blog.csdn.net/chen_zw/article/details/18816599
      */
-    private DatabaseMetaData printMetaDatainfo(DatabaseMetaData databaseMetaData) {
+    private DatabaseMetaData printMetaDatainfo(DatabaseMetaData dbmd) {
         System.out.println("⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇⬇");
         try {
             System.out.println("数据库属性信息："
-                    + databaseMetaData.getDatabaseMajorVersion() + " "
-                    + databaseMetaData.getDatabaseMinorVersion() + " "
-                    + databaseMetaData.getDatabaseProductName() + " "
-                    + databaseMetaData.getDatabaseProductVersion());
+                    + dbmd.getDatabaseMajorVersion() + " "
+                    + dbmd.getDatabaseMinorVersion() + " "
+                    + dbmd.getDatabaseProductName() + " "
+                    + dbmd.getDatabaseProductVersion());
+            System.out.println("数据库已知的用户: "+ dbmd.getUserName());
+            System.out.println("数据库的系统函数的逗号分隔列表: "+ dbmd.getSystemFunctions());
+            System.out.println("数据库的时间和日期函数的逗号分隔列表: "+ dbmd.getTimeDateFunctions());
+            System.out.println("数据库的字符串函数的逗号分隔列表: "+ dbmd.getStringFunctions());
+            System.out.println("数据库供应商用于 'schema' 的首选术语: "+ dbmd.getSchemaTerm());
+            System.out.println("数据库URL: " + dbmd.getURL());
+            System.out.println("是否允许只读:" + dbmd.isReadOnly());
+            System.out.println("数据库的产品名称:" + dbmd.getDatabaseProductName());
+            System.out.println("数据库的版本:" + dbmd.getDatabaseProductVersion());
+            System.out.println("驱动程序的名称:" + dbmd.getDriverName());
+            System.out.println("驱动程序的版本:" + dbmd.getDriverVersion());
+            System.out.println("数据库中使用的表类型");
+            ResultSet rs = dbmd.getTableTypes();
+            while(rs.next()) {
+                System.out.println(rs.getString("TABLE_TYPE"));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.println("驱动信息："
-                + databaseMetaData.getDriverMajorVersion() + " "
-                + databaseMetaData.getDriverMinorVersion());
+                + dbmd.getDriverMajorVersion() + " "
+                + dbmd.getDriverMinorVersion());
         System.out.println("⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆");
-        return databaseMetaData;
+        return dbmd;
     }
 
     /**
