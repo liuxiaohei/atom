@@ -9,6 +9,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.IntStream;
 
 public class JdbcDemoTest implements BaseTrait {
 
@@ -17,7 +18,7 @@ public class JdbcDemoTest implements BaseTrait {
         ConnectionBean con = new ConnectionBean();
         con.setJdbcUrl("jdbc:mysql://localhost:3306/");
         con.setUsername("root");
-        con.setPassword("password");
+        con.setPassword("******");
         Optional.of(con)
                 .map(Try.of(e -> DriverManager.getConnection(
                         e.getJdbcUrl(),
@@ -32,6 +33,13 @@ public class JdbcDemoTest implements BaseTrait {
                         new String[]{"TABLE", "VIEW"})))
                 .map(e -> getResultSetProperty(e,"TABLE_NAME"))
                 .ifPresent(list -> list.forEach(System.out::println));
+        Optional.of(con)
+                .map(Try.of(e -> DriverManager.getConnection(
+                        e.getJdbcUrl(),
+                        e.getUsername(),
+                        e.getPassword())))
+                .ifPresent(e -> getsqlResult(e,"select * from 36kr.clue"));
+
     }
 
     /**
@@ -99,5 +107,31 @@ public class JdbcDemoTest implements BaseTrait {
                 + databaseMetaData.getDriverMinorVersion());
         System.out.println("⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆⬆");
         return databaseMetaData;
+    }
+
+    private static void getsqlResult(Connection conn,String sql) {
+        PreparedStatement pstmt;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery();
+            int col = rs.getMetaData().getColumnCount();
+            System.out.println("============================");
+            while (rs.next()) {
+                IntStream.rangeClosed(1,col).forEach(i -> {
+                    try {
+                        System.out.print(rs.getString(i) + "\t");
+                        if ((i == 2) && (rs.getString(i).length() < 8)) {
+                            System.out.print("\t");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+                System.out.println("");
+            }
+            System.out.println("============================");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
