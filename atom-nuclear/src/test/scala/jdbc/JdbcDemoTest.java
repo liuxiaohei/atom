@@ -118,7 +118,46 @@ public class JdbcDemoTest implements BaseTrait {
                 });
     }
 
-
+    /**
+     * mvn install:install-file -Dfile=sqljdbc4-2.0.jar -Dpackaging=jar -DgroupId=com.microsoft.sqlserver -DartifactId=sqljdbc4 -Dversion=4.2
+     */
+    /**
+     *  由于oracle的驱动中心库不存在的原因
+     *  1 先cd到这个包的目录下
+     *  2 mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc6.jar
+     */
+    @Test
+    public void sqlServerDemo() throws Exception{
+        ConnectionBean con = new ConnectionBean();
+        con.setJdbcUrl("jdbc:sqlserver://172.26.2.29:1433");
+        con.setUsername("sa");
+        con.setPassword("SQLserver123");
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        final Connection conn =  DriverManager.getConnection(
+                con.getJdbcUrl(),
+                con.getUsername(),
+                con.getPassword());
+        Optional.of(conn)
+                .map(Try.of(Connection::getMetaData))
+                .map(this::printMetaDatainfo)
+                .map(Try.of(e -> e.getTables(
+                        null,
+                        null,
+                        "%",
+                        new String[]{"TABLE", "VIEW"})))
+                .ifPresent(rs -> {
+                    try {
+                        while (rs.next()) {
+                            String tableName = rs.getString("TABLE_NAME");  //表名
+                            String tableType = rs.getString("TABLE_TYPE");  //表类型
+                            String remarks = rs.getString("REMARKS");       //表备注
+                            System.out.println(tableName + " - " + tableType + " - " + remarks);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+    }
     /**
      * 获取指定的属性
      */

@@ -35,6 +35,11 @@
             <version>11.2.0.1.0</version>
         </dependency>
         <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <dependency>
             <groupId>org.ld</groupId>
             <artifactId>atom-electron</artifactId>
             <version>0.0.1-SNAPSHOT</version>
