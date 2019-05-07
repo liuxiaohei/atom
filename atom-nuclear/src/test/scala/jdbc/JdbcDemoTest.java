@@ -82,7 +82,8 @@ public class JdbcDemoTest implements BaseTrait {
     }
     /**
      *  由于oracle的驱动中心库不存在的原因
-     *  mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc6.jar
+     *  1 先cd到这个包的目录下
+     *  2 mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc6.jar
      */
     @Test
     public void oracleDemo() throws Exception{
