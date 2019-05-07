@@ -5,14 +5,18 @@ import java.sql.*;
 public class JdbcUtil {
 
     //获得驱动
-    private static String DRIVER = "com.mysql.cj.jdbc.Driver";
+    //private static String DRIVER = "com.mysql.cj.jdbc.Driver";
     //private static String DRIVER = "oracle.jdbc.driver.OracleDriver";
+    private static String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
     //获得url
-    private static String URL = "jdbc:mysql://localhost:3306/";
+    //private static String URL = "jdbc:mysql://localhost:3306/";
+    private static String URL = "jdbc:sqlserver://172.26.2.29:1433";
     //获得连接数据库的用户名
-    private static String USER = "root";
+    //private static String USER = "root";
+    private static String USER = "sa";
     //获得连接数据库的密码
-    private static String PASS = "******";
+    //private static String PASS = "******";
+    private static String PASS = "SQLserver123";
 
     static {
         try {

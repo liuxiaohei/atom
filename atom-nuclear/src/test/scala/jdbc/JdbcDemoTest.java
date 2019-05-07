@@ -121,11 +121,6 @@ public class JdbcDemoTest implements BaseTrait {
     /**
      * mvn install:install-file -Dfile=sqljdbc4-2.0.jar -Dpackaging=jar -DgroupId=com.microsoft.sqlserver -DartifactId=sqljdbc4 -Dversion=4.2
      */
-    /**
-     *  由于oracle的驱动中心库不存在的原因
-     *  1 先cd到这个包的目录下
-     *  2 mvn install:install-file -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0.1.0 -Dpackaging=jar -Dfile=ojdbc6.jar
-     */
     @Test
     public void sqlServerDemo() throws Exception{
         ConnectionBean con = new ConnectionBean();
@@ -141,10 +136,10 @@ public class JdbcDemoTest implements BaseTrait {
                 .map(Try.of(Connection::getMetaData))
                 .map(this::printMetaDatainfo)
                 .map(Try.of(e -> e.getTables(
-                        null,
+                        "tdtdatabase3",
                         null,
                         "%",
-                        new String[]{"TABLE", "VIEW"})))
+                        new String[]{"TABLE","SYSTEM TABLE"})))
                 .ifPresent(rs -> {
                     try {
                         while (rs.next()) {
@@ -158,6 +153,53 @@ public class JdbcDemoTest implements BaseTrait {
                     }
                 });
     }
+
+    /**
+     * http://www.it1352.com/594867.html
+     * https://stackoverflow.com/questions/30567224/java-databasemetadata-getschemas-returns-empty-resultset-expected-non-empty-r
+     */
+    @Test
+    public void sqlServerDemo1() throws Exception {
+        ConnectionBean con = new ConnectionBean();
+        con.setJdbcUrl("jdbc:sqlserver://172.26.2.29:1433");
+        con.setUsername("sa");
+        con.setPassword("SQLserver123");
+        Optional<DatabaseMetaData> databaseMetaData = Optional.of(con)
+                .map(Try.of(e -> DriverManager.getConnection(
+                        e.getJdbcUrl(),
+                        e.getUsername(),
+                        e.getPassword())))
+                .map(Try.of(Connection::getMetaData));
+
+        databaseMetaData
+                .map(Try.of(DatabaseMetaData::getCatalogs))
+                .ifPresent(rs -> {
+                    try {
+                        while (rs.next()) {
+                            System.out.println("TABLE_CAT = "
+                                    + rs.getString("TABLE_CAT"));
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+        databaseMetaData
+                .map(Try.of(DatabaseMetaData::getSchemas))
+                .ifPresent(rs -> {
+                    System.out.println("List of schemas: ");
+                    try {
+                        while (rs.next()){
+                            String tableSchem = rs.getString("TABLE_SCHEM");
+                            System.out.println(tableSchem);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+
+    }
+
     /**
      * 获取指定的属性
      */
