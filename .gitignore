@@ -3,3 +3,6 @@
 atom-beans/target/
 atom-electron/target/
 atom-nuclear/target/
+atom-nuclear/src/main/scala/org/atom/actors/
+atom-nuclear/src/main/scala/org/atom/config/
+scripts/
