@@ -33,20 +33,14 @@ public class JdbcDemoTest implements BaseTrait {
                         new String[]{"TABLE", "VIEW"})))
                 .map(e -> getResultSetProperty(e,"TABLE_NAME"))
                 .ifPresent(list -> list.forEach(System.out::println));
-        Optional.of(con)
-                .map(Try.of(e -> DriverManager.getConnection(
-                        e.getJdbcUrl(),
-                        e.getUsername(),
-                        e.getPassword())))
-                .ifPresent(e -> selectSqlResult(e,"select * from 36kr.clue"));
-
     }
 
     /**
      * http://www.it1352.com/594867.html
+     * https://stackoverflow.com/questions/30567224/java-databasemetadata-getschemas-returns-empty-resultset-expected-non-empty-r
      */
     @Test
-    public void mysqlDemo1() throws Exception{
+    public void mysqlDemo1() throws Exception {
         ConnectionBean con = new ConnectionBean();
         con.setJdbcUrl("jdbc:mysql://localhost:3306/");
         con.setUsername("root");
