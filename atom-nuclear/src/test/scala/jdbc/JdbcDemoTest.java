@@ -91,20 +91,30 @@ public class JdbcDemoTest implements BaseTrait {
         con.setUsername("tdt_ora");
         con.setPassword("123456");
         Class.forName("oracle.jdbc.driver.OracleDriver");
-        Optional.of(con)
-                .map(Try.of(e -> DriverManager.getConnection(
-                        e.getJdbcUrl(),
-                        e.getUsername(),
-                        e.getPassword())))
+        final Connection conn =  DriverManager.getConnection(
+                con.getJdbcUrl(),
+                con.getUsername(),
+                con.getPassword());
+        Optional.of(conn)
                 .map(Try.of(Connection::getMetaData))
                 .map(this::printMetaDatainfo)
                 .map(Try.of(e -> e.getTables(
-                        "36kr",
-                        null,
+                        "111",
+                        "OUSER1",
                         "%",
                         new String[]{"TABLE", "VIEW"})))
-                .map(e -> getResultSetProperty(e,"TABLE_NAME"))
-                .ifPresent(list -> list.forEach(System.out::println));
+                .ifPresent(rs -> {
+                    try {
+                        while (rs.next()) {
+                            String tableName = rs.getString("TABLE_NAME");  //表名
+                            String tableType = rs.getString("TABLE_TYPE");  //表类型
+                            String remarks = rs.getString("REMARKS");       //表备注
+                            System.out.println(tableName + " - " + tableType + " - " + remarks);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
     }
 
 
