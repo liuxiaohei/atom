@@ -1,13 +1,12 @@
 package org.atom.util;
 
-import oracle.jdbc.OracleConnection;
-
 import java.sql.*;
 
 public class JdbcUtil {
 
     //获得驱动
-    private static String DRIVER = "oracle.jdbc.driver.OracleDriver";
+    private static String DRIVER = "com.mysql.cj.jdbc.Driver";
+    //private static String DRIVER = "oracle.jdbc.driver.OracleDriver";
     //获得url
     private static String URL = "jdbc:mysql://localhost:3306/";
     //获得连接数据库的用户名
