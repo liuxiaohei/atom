@@ -136,8 +136,8 @@ public class JdbcDemoTest implements BaseTrait {
                 .map(Try.of(Connection::getMetaData))
                 .map(this::printMetaDatainfo)
                 .map(Try.of(e -> e.getTables(
-                        "tdtdatabase3",
-                        null,
+                        "tdt_db1",
+                        "%ld",
                         "%",
                         new String[]{"TABLE","SYSTEM TABLE"})))
                 .ifPresent(rs -> {
@@ -164,6 +164,7 @@ public class JdbcDemoTest implements BaseTrait {
         con.setJdbcUrl("jdbc:sqlserver://172.26.2.29:1433");
         con.setUsername("sa");
         con.setPassword("SQLserver123");
+        Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         Optional<DatabaseMetaData> databaseMetaData = Optional.of(con)
                 .map(Try.of(e -> DriverManager.getConnection(
                         e.getJdbcUrl(),
